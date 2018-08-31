@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Survey Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Roboto" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+</head>
+<body>
+    <div id="main">
+    <div id="main-container" class="center">
+        <h1 id="title">Web Dev Survey</h1>
+
+        <div id="description"><h4>To track the preferences of some of your favorite technologies.</h4></div>
+
+        <div id="form-container">
+            <form id="survey-form">
+                <fieldset>
+                    <label for="name" id="name-label">Full Name</label>
+                        <div>
+                            <input type="name" id="name" placeholder="John Doe" class="center one-hundred">
+                        </div>
+                </fieldset>
+
+                <fieldset>
+                    <label for="email" id="email-label" required>Email</label>
+                        <div>
+                            <input type="email" id="email" placeholder="john.doe@mail.com" class="center one-hundred">
+                        </div>
+                </fieldset>
+
+                <fieldset>
+                    <label for="number" id="number-label">Phone Number</label>
+                        <div>
+                            <input type="number" id="number" placeholder="7075551234" class="center one-hundred" required>
+                        </div>
+                </fieldset>
+
+                <fieldset >
+                    <label for="dropdown">How many hours a day do you spend writing code?</label>
+                        <select id="dropdown" width="20px">
+                            <option value="none">0-2</option>
+                            <option value="light">3-6</option>
+                            <option value="moderate">7-10</option>
+                            <option value="heavy">11+</option>
+                        </select>                       
+                </fieldset>
+
+                <fieldset>
+                    <label id="comp-label">Linux or Mac OS?</label>
+                    <div>
+                        <input type="radio" id="linux" name="computer">Linux 
+                        <input type="radio" id="mac-os" name="computer">Mac OS
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <label id="editor-label">Favorite text editor?</label>
+                    <div>
+                        <input type="radio" id="vscode" name="editor">VS Code
+                        <input type="radio" id="sublime" name="editor">Sublime Text
+                        <input type="radio" id="atom" name="editor">Atom
+                        <input type="radio" id="brackets" name="editor">Brackets
+                        <input type="radio" id="other" name="editor">Other
+                    </div>
+                </fieldset>
+                
+                <fieldset>
+                    <label id="framework-label">Choose one framework:</label>
+                    <div>
+                        <input type="radio" id="angular" name="framework">Angular
+                        <input type="radio" id="react" name="framework">React
+                        <input type="radio" id="vue" name="framework">Vue
+                    </div>
+                </fieldset>
+
+                <!-- make this one a checkbox -->
+                <fieldset>
+                    <label id="language-label">Favorite back-end web dev programming languages? (select all that apply) </label>
+                    <div>
+                        <input type="checkbox" id="python" name="languages">Python
+                        <input type="checkbox" id="node" name="languages">NodeJS
+                        <input type="checkbox" id="ruby" name="languages">Ruby
+                        <input type="checkbox" id="ruby" name="languages">C#
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <label for="comments">Additional Comments</label>
+                    <div>
+                        <textarea id="comments" class="one-hundred center" rows="8" placeholder=". . . ."></textarea>
+                    </div>
+                    
+                </fieldset>
+
+
+
+                <button id="submit" class="center">
+                    Submit 
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
