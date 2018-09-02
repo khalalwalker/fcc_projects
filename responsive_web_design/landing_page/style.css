@@ -1,0 +1,70 @@
+/** {*/
+    /*border: 1px solid red;*/
+/*}*/
+
+
+
+#header {
+    border-bottom: 1px solid grey;
+}
+
+nav {
+    /*border: 1px solid blue;*/
+    float: right;
+}
+
+#otg {
+    position: absolute;
+    top: 25px;
+}
+
+.nav-link{
+    list-style-type: none;
+    display: inline;
+    margin-right: 20px;
+    margin-left: 20px;
+
+}
+
+
+fieldset {
+    border: none;
+}
+
+#header-img {
+    height: auto;
+    width: 50px;
+    /*display: inline-block;*/
+}
+
+/*CSS from Bootstrap*/
+
+.display-4 {
+    font-size:3.5rem;
+    font-weight:300;
+    line-height:1.2
+}
+
+.jumbotron {
+    padding:2rem 1rem;
+    margin-bottom:2rem;
+    background-color:#e9ecef;
+    border-radius:.3rem
+}
+
+@media (min-width:576px){
+    .jumbotron {
+        padding:4rem 2rem
+    }
+}
+
+.jumbotron-fluid{
+    padding-right:0;
+    padding-left:0;
+    border-radius:0
+}
+
+.lead {
+    font-size:1.25rem;
+    font-weight:300;
+}
