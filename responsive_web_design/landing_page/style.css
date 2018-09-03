@@ -1,6 +1,6 @@
 #header {
     border-bottom: 1px solid grey;
-    /* margin-top: 30px; */
+    margin-top: 30px;
 }
 
 nav {
@@ -9,10 +9,10 @@ nav {
 
 #otg {
     position: absolute;
-    top: 25px;
+    top: 40px;
 }
 
-.nav-link{
+.nav-link {
     list-style-type: none;
     display: inline;
     margin-right: 20px;
@@ -28,7 +28,7 @@ fieldset {
 #header-img {
     height: auto;
     width: 50px;
-    /*display: inline-block;*/
+  
 }
 
 a {
@@ -42,6 +42,8 @@ a {
     margin-right: auto;
 }
 
+
+/* Products */
 #products {
     margin-top: 50px;
     margin-left: auto;
@@ -60,9 +62,13 @@ h2, h4 {
 }
 
 h4 {
-    font-size: 20px;
+    font-size: 30px;
     font-weight: 250;
     /* text-decoration: underline; */
+    text-align: center;
+    z-index: 2;
+    position: relative;
+    color: #fff;
 }
 
 #products h2 {
@@ -80,25 +86,107 @@ h4 {
     flex-basis: 0;
 }
 
-#solar {
-    background-image: url("https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=490f35d48ba74366f1f6b5d046621920&auto=format&fit=crop&w=1952&q=80");
-    background-size: contain;
-    color: white;
+#solar, #wind, #geothermal {
+    position: relative;
+    background: #5c97ff;
+    overflow: hidden;
 }
 
-#wind {
-    background-image: url("https://images.unsplash.com/photo-1523453655353-9d88ffc00d4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=2b22c14c1864b9e019d161dc75c268fb&auto=format&fit=crop&w=1949&q=80");
-    background-size: contain;
-    color: white;
+#solar p, #wind p, #geothermal p {
+    padding: 50px;
+    text-align: center;
+    z-index: 2;
+    position: relative;
+    color: #fff;
 }
 
-#geothermal {
-    background-image: url("https://images.unsplash.com/photo-1533922315695-31808ff4475d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=4f634050a2c24c3d02ce93db10676a12&auto=format&fit=crop&w=1950&q=80");
-    background-size: contain;
-    color: white;
+#solar:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.6;
+    background-image: url('https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=490f35d48ba74366f1f6b5d046621920&auto=format&fit=crop&w=1952&q=80');
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+#wind:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.6;
+    background-image: url('https://images.unsplash.com/photo-1523453655353-9d88ffc00d4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=2b22c14c1864b9e019d161dc75c268fb&auto=format&fit=crop&w=1949&q=80');
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+#geothermal:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.6;
+    background-image: url('https://images.unsplash.com/photo-1533922315695-31808ff4475d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=4f634050a2c24c3d02ce93db10676a12&auto=format&fit=crop&w=1950&q=80');
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
 }
 
 
+#form-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding: 35px;
+
+    width: 40%;
+    /* background-color: red; */
+}
+
+button {
+    padding: 15px;
+    border-radius: 4px;
+    background-color: goldenrod;
+}
+
+#contact {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+
+
+/* Jumbotron */
 .display-4 {
     font-size:3.5rem;
     font-weight:300;
@@ -111,7 +199,7 @@ h4 {
     background-color:#e9ecef;
     border-radius:.3rem;
     background-size: auto 100%;
-    color: rgba(179, 162, 11, 0.733);
+    color: goldenrod;
     /* -webkit-text-stroke: 1px rgba(0, 0, 0, 0.4); */
 }
 
@@ -130,4 +218,30 @@ h4 {
 .lead {
     font-size:1.25rem;
     font-weight:300;
+}
+
+/* footer */
+footer {
+    margin-top: 30px;
+    background-color: #ddd;
+    padding: 20px;
+}
+
+footer ul {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+footer ul li{
+    padding: 0 10px;
+    list-style-type: none;
+    display: inline;
+}
+
+footer span {
+    margin-top: 5px;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 0.9em;
+    color: #444;
 }
