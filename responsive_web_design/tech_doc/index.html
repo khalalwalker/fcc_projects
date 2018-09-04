@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Eloquent JS: The DOM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+</head>
+<body>
+    <div class="navbar">
+        <h1>The DOM</h1>
+        <hr>
+        <a href="#intro">Introduction</a>
+        <a href="#doc-structure">Document structure</a>
+        <a href="#trees">Trees</a>
+        <a href="#standard">The standard</a>
+        <a href="#moving">Moving through the tree</a>
+        <a href="#finding-elements">Finding elements</a>
+        <a href="#changing-the-doc">Changing the document</a>
+        <a href="#">Creating nodes</a>
+        <a href="#">Attributes</a>
+        <a href="#">Layout</a>
+        <a href="#">Styling</a>
+        <a href="#">Cascading styles</a>
+        <a href="#">Query selectors</a>
+        <a href="#">Positioning and animating</a>
+        <a href="#summary">Summary</a>
+    </div>
+
+    <div id="page-container">
+
+        <main id="main-doc">
+            <section class="main-section">
+                <header id="intro">
+                    <h3>Introduction</h3>
+                </header>
+                <article>
+                    <p>
+                        When you open a web page in your browser, the browser retrieves the page’s HTML text and parses it, much like the way our parser from Chapter 12 parsed programs. The browser builds up a model of the document’s structure and uses this model to draw the page on the screen.
+                    </p>
+                    <p>
+                        This representation of the document is one of the toys that a JavaScript program has available in its sandbox. It is a data structure that you can read or modify. It acts as a live data structure: when it’s modified, the page on the screen is updated to reflect the changes.
+                    </p>
+                </article>
+            </section>
+            <section class="main-section">
+                <header id="doc-structure">
+                    <h3>Document structures</h3>
+                </header>
+                <article>
+                    <p>
+                        You can imagine an HTML document as a nested set of boxes. Tags such as &lt;body&gt;and &lt;/body&gt; enclose other tags, which in turn contain other tags or text. Here’s the example document from the previous chapter:
+                    </p>
+                    <p><code>
+                        &lt;!DOCTYPE html&gt;
+                        &lt;html&gt;
+                            &lt;head&gt;
+                                &lt;title&gt;My home page&lt;/title&gt;
+                            &lt;/head&gt;
+                            &lt;body&gt;
+                                &lt;h1&gt;My home page&lt;/h1&gt;
+                                &lt;p&gt;Hello, I am Marijn and this is my home page.&lt;/p&gt;
+                                &lt;p&gt;I also wrote a book! Read it
+                                    &lt;a href="httl://eloquentjavascript.net">here&lt;/a&gt;.
+                                &lt;/p&gt;
+                            &lt;/body&gt;
+                        &lt;/html&gt;
+                    </code></p>
+                    <p>
+                        The data structure the browser uses to represent the document follows this shape. For each box, there is an object, which we can interact with to find out things such as what HTML tag it represents and which boxes and text it contains. This representation is called the Document Object Model, or DOM for short.
+                    </p>
+                    <p>
+                        The global binding document gives us access to these objects. Its documentElement property refers to the object representing the &lt;html&gt; tag. Since every HTML document has a head and a body, it also has head and body properties, pointing at those elements.
+                    </p>
+                </article>
+            </section>
+            <section class="main-section">
+                <header id="trees">
+                    <h3>Trees</h3>
+                </header>
+                <article>
+                    <p>
+                        Think back to the syntax trees from Chapter 12 for a moment. Their structures are strikingly similar to the structure of a browser’s document. Each node may refer to other nodes, children, which in turn may have their own children. This shape is typical of nested structures where elements can contain subelements that are similar to themselves.
+                    </p>
+                    <p>
+                        We call a data structure a tree when it has a branching structure, has no cycles (a node may not contain itself, directly or indirectly), and has a single, well-defined root. In the case of the DOM, <span>document.documentElement</span> serves as the root.
+                    </p>
+                    <p>
+                        Trees come up a lot in computer science. In addition to representing recursive structures such as HTML documents or programs, they are often used to maintain sorted sets of data because elements can usually be found or inserted more efficiently in a tree than in a flat array.
+                    </p>
+                    <p>
+                        A typical tree has different kinds of nodes. The syntax tree for the Egg language had identifiers, values, and application nodes. Application nodes may have children, whereas identifiers and values are leaves, or nodes without children.
+                    </p>
+                    <p>
+                        The same goes for the DOM. Nodes for elements, which represent HTML tags, determine the structure of the document. These can have child nodes. An example of such a node is document.body. Some of these children can be leaf nodes, such as pieces of text or comment nodes.
+                    </p>
+                    <p>
+                        Each DOM node object has a nodeType property, which contains a code (number) that identifies the type of node. Elements have code 1, which is also defined as the constant property Node.ELEMENT_NODE. Text nodes, representing a section of text in the document, get code 3 (Node.TEXT_NODE). Comments have code 8 (Node.COMMENT_NODE).
+                    </p>
+                </article>
+            </section>
+            <section class="main-section">
+                <header id="standard">
+                    <h3>The standard</h3>
+                </header>
+                <article>
+                    <p>
+                        Using cryptic numeric codes to represent node types is not a very JavaScript-like thing to do. Later in this chapter, we’ll see that other parts of the DOM interface also feel cumbersome and alien. The reason for this is that the DOM wasn’t designed for just JavaScript. Rather, it tries to be a language-neutral interface that can be used in other systems as well—not just for HTML but also for XML, which is a generic data format with an HTML-like syntax.
+                    </p>
+                    <p>
+                        This is unfortunate. Standards are often useful. But in this case, the advantage (cross-language consistency) isn’t all that compelling. Having an interface that is properly integrated with the language you are using will save you more time than having a familiar interface across languages.
+                    </p>
+                    <p>
+                        As an example of this poor integration, consider the <span>childNodes</span> property that element nodes in the DOM have. This property holds an array-like object, with a length property and properties labeled by numbers to access the child nodes. But it is an instance of the <span>NodeList</span> type, not a real array, so it does not have methods such as <span>slice</span> and <span>map</span>.
+                    </p>
+                    <p>
+                        Then there are issues that are simply poor design. For example, there is no way to create a new node and immediately add children or attributes to it. Instead, you have to first create it and then add the children and attributes one by one, using side effects. Code that interacts heavily with the DOM tends to get long, repetitive, and ugly.
+                    </p>
+                    <p>
+                        But these flaws aren’t fatal. Since JavaScript allows us to create our own abstractions, it is possible to design improved ways to express the operations you are performing. Many libraries intended for browser programming come with such tools.
+                    </p>
+                </article>
+            </section>
+            <section class="main-section">
+                <header id="moving">
+                    <h3>Moving through the tree</h3>
+                </header>
+                <article>
+                    <p>
+                        Every node has a parentNode property that points to the node it is part of, if any. Likewise, every element node (node type 1) has a childNodes property that points to an array-like object holding its children.
+                    </p>
+                    <p>
+                        In theory, you could move anywhere in the tree using just these parent and child links. But JavaScript also gives you access to a number of additional convenience links. The firstChild and lastChild properties point to the first and last child elements or have the value null for nodes without children. Similarly, previousSibling and nextSibling point to adjacent nodes, which are nodes with the same parent that appear immediately before or after the node itself. For a first child, previousSibling will be null, and for a last child, nextSibling will be null.
+                    </p>
+                    <p>
+                        There’s also the <span>children</span> property, which is like <span>childNodes</span> but contains only element (type 1) children, not other types of child nodes. This can be useful when you aren’t interested in text nodes.
+                    </p>
+                    <p>
+                        When dealing with a nested data structure like this one, recursive functions are often useful. The following function scans a document for text nodes containing a given string and returns true when it has found one:
+                    </p>
+                    <p><code>
+                        function talksAbout(node, string) {
+                            if (node.nodeType == Node.ELEMENT_NODE) {
+                                for (let i = 0; i < node.childNodes.length; i++) {
+                                    if (talksAbout(node.childNodes[i], string)) {
+                                        return true;
+                                    }
+                                }
+                                return false;
+                            } else if (node.nodeType == Node.TEXT_NODE) {
+                                return node.nodeValue.indexOf(string) > -1;
+                                }
+                            }
+
+                            console.log(talksAbout(document.body, "book"));
+                            // → true
+                    </code></p>
+                    <p>
+                        Because <span>childNodes</span> is not a real array, we cannot loop over it with <span>for/of</span> and have to run over the index range using a regular for loop or use <span>Array.from</span>.
+                    </p>
+                    <p>
+                        The nodeValue property of a text node holds the string of text that it represents.
+                    </p>
+                </article>
+            </section>
+            <section class="main-section">
+                <header id="finding-elements">
+                    <h3>Finding elements</h3>
+                </header>
+                <article>
+                    <p>
+                        Navigating these links among parents, children, and siblings is often useful. But if we want to find a specific node in the document, reaching it by starting at document.body and following a fixed path of properties is a bad idea. Doing so bakes assumptions into our program about the precise structure of the document—a structure you might want to change later. Another complicating factor is that text nodes are created even for the whitespace between nodes. The example document’s &lt;body&gt; tag does not have just three children (&lt;h1&gt; and two &lt;p&gt; elements) but actually has seven: those three, plus the spaces before, after, and between them.
+                    </p>
+                    <p>
+                        So if we want to get the href attribute of the link in that document, we don’t want to say something like “Get the second child of the sixth child of the document body”. It’d be better if we could say “Get the first link in the document”. And we can.
+                    </p>
+                    <p><code>
+                        let link = document.body.getElementsByTagName("a")[0];
+                        console.log(link.href);
+                    </code></p>
+                    <p>
+                        All element nodes have a <span>getElementsByTagName</span> method, which collects all elements with the given tag name that are descendants (direct or indirect children) of that node and returns them as an array-like object.
+                    </p>
+                    <p>
+                        To find a specific <em>single</em> node, you can give it an <span>id</span> attribute and use <span>document.getElementById</span> instead.
+                    </p>
+                    <p><code>
+                        &lt;p>My ostrich Gertrude:&lt;/p>
+                        &lt;p>&lt;img id="gertrude" src="img/ostrich.png">&lt;/p>
+
+                        &lt;script>
+                            let ostrich = document.getElementById("gertrude");
+                            console.log(ostrich.src);
+                        &lt;/script>
+                    </code></p>
+                    <p>
+                        A third, similar method is <span>getElementsByClassName</span>, which, like <span>getElementsByTagName</span>, searches through the contents of an element node and retrieves all elements that have the given string in their <span>class</span> attribute.
+                    </p>
+                </article>
+            </section>
+            <section class="main-section">
+                <header id="changing-the-doc">
+                    <h3>Changing the document</h3>
+                </header>
+                <article>
+                    <p>
+                        Almost everything about the DOM data structure can be changed. The shape of the document tree can be modified by changing parent-child relationships. Nodes have a remove method to remove them from their current parent node. To add a child node to an element node, we can use <span>appendChild</span>, which puts it at the end of the list of children, or <span>insertBefore</span>, which inserts the node given as the first argument before the node given as the second argument.
+                    </p>
+                    <p><code>
+                        &lt;p>One&lt;/p>
+                        &lt;p>Two&lt;/p>
+                        &lt;p>Three&lt;/p>
+
+                        &lt;script>
+                            let paragraphs = document.body.getElementsByTagName("p");
+                            document.body.insertBefore(paragraphs[2], paragraphs[0]);
+                        &lt;/script>
+                    </code></p>
+                    <p>
+                        A node can exist in the document in only one place. Thus, inserting paragraph <em>Three</em> in front of paragraph <span>One</span> will first remove it from the end of the document and then insert it at the front, resulting in <em>Three/One/Two</em>. All operations that insert a node somewhere will, as a side effect, cause it to be removed from its current position (if it has one).
+                    </p>
+                    <p>
+                        The <span>replaceChild</span> method is used to replace a child node with another one. It takes as arguments two nodes: a new node and the node to be replaced. The replaced node must be a child of the element the method is called on. Note that both <span>replaceChild</span> and <span>insertBefore</span> expect the new node as their first argument.
+                    </p>
+                </article>
+            </section>
+            <section class="main-section">
+                <header>
+                    <h3>Creating nodes</h3>
+                </header>
+                <p></p>
+                <p></p>
+            </section>
+            <section class="main-section">
+                <header>
+                    <h3>Attributes</h3>
+                </header>
+                <p></p>
+                <p></p>
+            </section>
+            <section class="main-section">
+                <header>
+                    <h3>Layout</h3>
+                </header>
+                <p></p>
+                <p></p>
+            </section>
+            <section class="main-section">
+                <header>
+                    <h3>Styling</h3>
+                </header>
+                <p></p>
+                <p></p>
+            </section>
+            <section class="main-section">
+                <header>
+                    <h3>Cascading styles</h3>
+                </header>
+                <p></p>
+                <p></p>
+            </section>
+            <section class="main-section">
+                <header>
+                    <h3>Query selectors</h3>
+                </header>
+                <p></p>
+                <p></p>
+            </section>
+            <section class="main-section">
+                <header>
+                    <h3>Positioning and animating</h3>
+                </header>
+                <p></p>
+                <p></p>
+            </section>
+            <section class="main-section">
+                <header id="summary">
+                    <h3>Summary</h3>
+                </header>
+                <article>
+                    <p>
+                        JavaScript programs may inspect and interfere with the document that the browser is displaying through a data structure called the DOM. This data structure represents the browser’s model of the document, and a JavaScript program can modify it to change the visible document.
+                    </p>
+                    <p>
+                        The DOM is organized like a tree, in which elements are arranged hierarchically according to the structure of the document. The objects representing elements have properties such as <span>parentNode</span> and <span>childNodes</span>, which can be used to navigate through this tree.
+                    </p>
+                    <p>
+                        The way a document is displayed can be influenced by <em>styling</em>, both by attaching styles to nodes directly and by defining rules that match certain nodes. There are many different style properties, such as <span>color</span> or <span>display</span>. JavaScript code can manipulate an element’s style directly through its style property.
+                    </p>
+                </article>
+            </section>
+
+        </main>
+    </div>
+
+</body>
+</html>
