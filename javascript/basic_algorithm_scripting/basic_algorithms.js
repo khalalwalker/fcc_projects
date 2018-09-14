@@ -25,5 +25,15 @@ function factorialize(num) {
 }
 
 // Find the longest word in a string
+function findLongestWordLength(str) {
+    let strArray = str.split(" ");
+    let longest = 0;
+        for (let i = 0; i < strArray.length; i++) {
+            if (strArray[i].length > longest) {
+                longest = strArray[i].length;
+            }
+        }
+    return longest;
+}
 
-
+//Return largest numbers in array
