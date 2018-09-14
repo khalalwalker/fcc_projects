@@ -36,4 +36,33 @@ function findLongestWordLength(str) {
     return longest;
 }
 
-//Return largest numbers in array
+// Return largest numbers in array
+function largestOfFour(arr) {
+    let largestArr = [];
+    for(let i = 0; i < arr.length; i++) {
+        let bigNumber = arr[i][0];
+        for(let j = 0; j < arr[i].length; j++) {
+            if (arr[i][j] > bigNumber) {
+                bigNumber = arr[i][j];
+            }
+        }
+        largestArr.push(bigNumber);
+    }
+    return largestArr;
+}
+
+// Confirm the ending of a String
+function confirmEnding(str, target) {
+    return str.substring(str.length - target.length) == target;
+}
+
+// Repeat a string
+function repeatStringNumTimes(str, num) {
+    let repeatStr = "";
+    let counter = 0;
+    while (counter < num) {
+        repeatStr += str;
+        counter++;
+    }
+    return repeatStr;
+}
