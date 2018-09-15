@@ -101,7 +101,7 @@ function titleCase(str) {
 
 // Franken Splice
 function frankenSplice(arr1, arr2, n) {
-    let arr = arr2.slice();
+    let arr = arr2.slice(); // creates a copy of the array so the splice doesnt affect the original array
    arr.splice(n, 0, ...arr1);
    return arr;
 }
@@ -109,4 +109,47 @@ function frankenSplice(arr1, arr2, n) {
 // Falsy Bouncer
 function bouncer(arr) {
     return arr.filter(value => Boolean);
+}
+
+// return where a value is to be inserted
+function getIndexToIns(arr, num) {
+    arr.sort((a, b) => a - b);
+    if (arr.length == 0) {
+        return 0;
+    }    
+    for (let i = 0; i < arr.length; i++) {
+
+        if (num <= arr[i] || arr.length == 0) {
+            return i;
+        }
+    }
+    return arr.length;
+}
+
+// Mutations
+function mutation(arr) {
+    let testChar = arr[1].toLowerCase().split("");
+    let charCount = 0;
+    for (let i = 0; i < testChar.length; i++) {
+        if (arr[0].toLowerCase().includes(testChar[i])) {
+            charCount += 1;
+        }
+    }
+    return charCount === testChar.length;
+}
+
+// Chunky Monkey
+function chunkArrayInGroups(arr, size) {
+    let newArray = [];
+    let arrayGroup = [];
+
+    for (let i = 0; i < arr.length; i++) {
+        arrayGroup.push(arr[i]);
+
+        if(arrayGroup.length === size || arr.length - 1 === i) {
+            newArray.push(arrayGroup);
+            arrayGroup = [];
+        }
+    }
+    return newArray;
 }
