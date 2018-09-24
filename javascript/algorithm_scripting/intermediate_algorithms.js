@@ -148,3 +148,113 @@ function sumFibs(num) {
     return sum;
 }
 
+// Sum of Primes
+function sumPrimes(num) {
+    // Create function to check if number is prime.
+    const isPrime = number => {
+        for(let i = 2; i <= Math.sqrt(number); i++) {
+            if(number % i === 0) return false; 
+        }
+        return number !== 1 && number !== 0;
+    }
+
+    let sum = 2;
+    // Adding up the prime numbers
+    for(let i = 3; i <= num; i++) {
+        if(isPrime(i)) {
+            sum += i;
+        }
+    }
+    return sum;
+}
+
+// Sorted Union
+function uniteUnique() {
+    let newArray = [];
+    let i = 0;
+    while (arguments[i]) {
+        newArray = newArray.concat(arguments[i]);
+        i++;
+    }
+    console.log(newArray);
+
+    return newArray.filter((item, position) => {
+        return newArray.indexOf(item) == position;
+    })
+  }
+
+
+  // Least common multiple
+  function smallestCommons(arr) {
+    // insert the range of numbers into an array.
+    let range = [];
+    for (let i = Math.max(arr[0], arr[1]); i >= Math.min(arr[0], arr[1]); i--) {
+        range.push(i);
+    }
+
+    let lcm = range[0];
+
+    for (let i = 1; i < range.length; i++) {
+        let GCD = gcd(lcm, range[i]);
+        lcm = (lcm * range[i]) / GCD;
+    }
+
+    return lcm;
+
+    function gcd(x, y) { // Euclid's algorithm, keeps diving until no remainder
+    if (y === 0)
+        return x;
+    else
+        return gcd(y, x%y);
+    }
+}
+
+// Drop the first element until it's true
+function dropElements(arr, func) {
+    // Drop them elements.
+    while (arr.length > 0 && !func(arr[0])) {
+      arr.shift();
+    }
+      return arr;
+  }
+  
+  // Truth Checker
+  function truthCheck (collection, pre) {
+    for(let i = 0; i < collection.length; i++) {
+        if (!Boolean(collection[i][pre])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+// Create a Person
+const Person = function(firstAndLast) {
+
+    let fullName = firstAndLast;
+  
+    this.setFullName = function(name) {
+      fullName = name;
+    }
+  
+    this.getFullName = function() {
+      return fullName;
+    };
+  
+    this.setFirstName = function(first) {
+      fullName = first + " " + fullName.split(" ")[1];
+    }
+  
+    this.getFirstName = function() {
+      return fullName.split(" ")[0];
+    }
+  
+    this.setLastName = function(last) {
+      fullName = fullName.split(" ")[0] + " " + last;
+    }
+  
+    this.getLastName = function() {
+      return fullName.split(" ")[1];
+    }
+    return firstAndLast;
+  };
