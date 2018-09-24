@@ -228,8 +228,8 @@ function dropElements(arr, func) {
     return true;
 }
 
-// Create a Person
-const Person = function(firstAndLast) {
+// Create a Person - function and class notation
+function Person (firstAndLast) {
 
     let fullName = firstAndLast;
   
@@ -258,3 +258,37 @@ const Person = function(firstAndLast) {
     }
     return firstAndLast;
   };
+
+class Person1 {
+    constructor (firstAndLast) {
+        this.fullName = firstAndLast;
+        return firstAndLast;
+    }
+
+    get fullName() {
+        return this.fullName;
+    }
+
+    set fullName (name) {
+        this.fullName = name;
+    }
+
+    get firstName() {
+        return this.fullName.split(" ")[0];
+    }
+
+    set firstName(first) {
+        this.fullName = first + " " + this.fullName.split(" ")[1];
+    }
+
+    get lastName() {
+        return this.fullName.split(" ")[1];
+    }
+
+    set lastName(last) {
+        this.fullName = this.fullName.split(" ")[0] + " " + last;
+
+    }
+
+
+  }
