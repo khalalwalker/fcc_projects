@@ -292,3 +292,36 @@ class Person1 {
 
 
   }
+
+  // Flatten an Array
+function steamrollArray(arr) {
+    //Use spread operator to insert one level of values in array.
+    let flattenedArray = [].concat(...arr);
+    
+    // Check for nested arrays
+    return flattenedArray.some(Array.isArray) ? steamrollArray(flattenedArray) : flattenedArray;
+
+}
+
+// Binary to String
+function binaryAgent(str) {
+    return String.fromCharCode(
+        ...str.split(" ")
+        .map((character) => {
+            return parseInt(character, 2);
+        })
+    )
+}
+
+// Optional Arguments
+function addTogether() {
+    let args = Array.from(arguments);
+
+    return args.some(n => typeof n !== 'number') ? // checks if all values are numbers
+        undefined :
+        args.length > 1 ?
+        args.reduce((acc, n) => acc += n, 0) : // if the array length is greater than 1, reduce array
+        (n) => typeof n === "number" ?
+        n + args[0] :
+        undefined;
+}
